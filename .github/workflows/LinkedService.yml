@@ -83,9 +83,8 @@ jobs:
     - name: Deploy Azure Data Factory using Bicep
       run: |
         az deployment group create \
-          --resource-group ${{ secrets.RESOURCE_GROUP }} \
-          --template-file ./deploy.bicep \
-          --parameters connectionString=$CONNECTION_STRING
-
-
+          --resource-group "komatsu" \
+          --template-file ./bicep/modules/linkedservice.bicep \
+          --parameters dataFactoryName=DMJTest \
+          --parameters linkedServices="$linkedServices"
           

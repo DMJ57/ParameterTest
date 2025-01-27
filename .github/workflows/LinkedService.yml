@@ -40,6 +40,9 @@ jobs:
               }
         enable-AzPSSession: true
 
+    - name: Repo Var Test 
+      run: echo ${{ secrets.AZURE_CONNECTION_STRING }}
+
     - name: Read linkedService JSON files and deploy
       run: |
         linkedService1=$(cat ./linkedService/AzureBlobStorage1.json)

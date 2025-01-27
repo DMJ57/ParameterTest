@@ -7,13 +7,13 @@ on:
         required: true
         type: string
     secrets:
-      AZURE_CLIENT_ID_D_APIM:
+      AZURE_CLIENT_ID:
         required: true
-      AZURE_CLIENT_SECRET_D_APIM:
+      AZURE_CLIENT_SECRET:
         required: true
-      AZURE_SUBSCRIPTION_ID_D_APIM:
+      AZURE_SUBSCRIPTION_ID:
         required: true
-      AZURE_TENANT_ID_D_APIM:
+      AZURE_TENANT_ID:
         required: true
 
 jobs:

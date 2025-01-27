@@ -78,9 +78,9 @@ jobs:
         echo "CONNECTION_STRING=$CONNECTION_STRING"
 
         #Deploy using Bicep
-        az deployment group create \
-          --resource-group "komatsu" \
-          --template-file ./bicep/modules/linkedservice.bicep \
-          --parameters dataFactoryName=DMJTest \
-          --parameters linkedServices="$linkedServices"
+        #az deployment group create \
+          #--resource-group "komatsu" \
+          #--template-file ./bicep/modules/linkedservice.bicep \
+          #--parameters dataFactoryName=DMJTest \
+          #--parameters linkedServices="$linkedServices"
           

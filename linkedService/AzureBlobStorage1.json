@@ -5,7 +5,7 @@
         "annotations": [],
         "type": "AzureBlobStorage",
         "typeProperties": {
-            "connectionString": "[parameters('connectionString')]",
+          "connectionString": "[reference(concat('https://kx1-demo-dev.vault.azure.net/secrets/kx-demo-constring-dev'), '2019-09-01').value]",
             "encryptedCredential": ""
 
         }

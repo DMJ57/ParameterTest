@@ -62,6 +62,6 @@ jobs:
           --parameters dataFactoryName=DMJTest \
           --parameters linkedServices="$linkedServices" \
           --parameters connectionString="${{ secrets.AZURE_CONNECTION_STRING }}" \
-          --parameters encryptedCredential=${{ secrets.AZURE_ENCRYPTED_CREDENTIAL }}
+          --parameters encryptedCredential=${{ vars.TEST }}
 
           

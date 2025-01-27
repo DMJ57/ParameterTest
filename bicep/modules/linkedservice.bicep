@@ -14,7 +14,7 @@ resource linkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-0
   parent: dataFactory
   name: linkedService.name  // Removed the ${dataFactory.name}/ part
   properties: {
-    type: linkedService.definition.type
+    type: linkedService.definition.properties.type
     typeProperties: {
       connectionString: connectionString
       encryptedCredential: encryptedCredential}

@@ -1,0 +1,9 @@
+{
+	"name": "ADF-KOMATSU",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ff73c57c-dded-44ef-83b4-58a6ce3121bb",
+		"tenantId": "351ea326-1a66-4da2-addd-15d37c541283"
+	}
+}

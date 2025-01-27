@@ -43,20 +43,14 @@ jobs:
     - name: Read linkedService JSON files and deploy
       run: |
         linkedService1=$(cat ./linkedService/AzureBlobStorage1.json)
-        linkedService2=$(cat ./linkedService/AzureBlobStorage333.json)
 
         linkedServices=$(jq -n \
           --arg linkedService1 "$linkedService1" \
-          --arg linkedService2 "$linkedService2" \
           '[ 
             {
               "name": "AzureBlobStorage1", 
               "definition": $linkedService1 | fromjson 
-            }, 
-            { 
-              "name": "AzureBlobStorage333", 
-              "definition": $linkedService2 | fromjson 
-            } 
+            }
           ]')
 
         az deployment group create \

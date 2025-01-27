@@ -64,4 +64,31 @@ jobs:
           --parameters connectionString="${{ secrets.AZURE_CONNECTION_STRING }}" \
           --parameters encryptedCredential=${{ vars.TEST }}
 
+    - name: Fetch secrets from Azure Key Vault
+      id: fetch-secrets
+      run: |
+        # Set the Key Vault and secret names
+        KEY_VAULT_NAME="kx1-demo-dev"
+        SECRET_NAME="kx-demo-constring-dev"
+
+        # Fetch the secret using Azure CLI
+        CONNECTION_STRING=$(az keyvault secret show --name $SECRET_NAME --vault-name $KEY_VAULT_NAME --query value -o tsv)
+
+        # Set the secret as an environment variable for later use
+        echo "CONNECTION_STRING=$CONNECTION_STRING" >> $GITHUB_ENV
+
+    - name: Repo Var Test 
+      run: echo "DJ=${{ CONNECTION_STRING }}"
+
+    - name: Install Bicep CLI
+      run: az bicep install
+
+    - name: Deploy Azure Data Factory using Bicep
+      run: |
+        az deployment group create \
+          --resource-group ${{ secrets.RESOURCE_GROUP }} \
+          --template-file ./deploy.bicep \
+          --parameters connectionString=$CONNECTION_STRING
+
+
           

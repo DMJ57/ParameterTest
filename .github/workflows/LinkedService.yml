@@ -61,4 +61,4 @@ jobs:
           --parameters connectionString="${{ secrets.AZURE_CONNECTION_STRING }}" \
           --parameters encryptedCredential=${{ secrets.AZURE_ENCRYPTED_CREDENTIAL }}
 
-          echo "GitHub Workflow Name: "${{ secrets.AZURE_CONNECTION_STRING }}"
+          

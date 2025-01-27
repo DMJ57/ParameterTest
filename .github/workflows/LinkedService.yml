@@ -75,10 +75,7 @@ jobs:
         CONNECTION_STRING=$(az keyvault secret show --name $SECRET_NAME --vault-name $KEY_VAULT_NAME --query value -o tsv)
 
         # Set the secret as an environment variable for later use
-        echo "CONNECTION_STRING=$CONNECTION_STRING" >> $GITHUB_ENV
-
-    - name: Repo Var Test 
-      run: echo "DJ=${{ CONNECTION_STRING }}"
+        echo "CONNECTION_STRING=$CONNECTION_STRING"
 
     - name: Install Bicep CLI
       run: az bicep install

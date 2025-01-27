@@ -5,7 +5,7 @@
         "annotations": [],
         "type": "AzureBlobStorage",
         "typeProperties": {
-            "connectionString": "",
+            "connectionString": "[parameters('connectionString')]",
             "encryptedCredential": ""
 
         }

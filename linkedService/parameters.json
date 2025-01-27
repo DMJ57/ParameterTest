@@ -1,0 +1,5 @@
+{
+    "connectionString": {
+        "value": "DefaultEndpointsProtocol=https;AccountName=komatsu33;EndpointSuffix=core.windows.net;"
+    }
+}

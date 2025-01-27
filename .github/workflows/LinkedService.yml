@@ -77,11 +77,7 @@ jobs:
         # Set the secret as an environment variable for later use
         echo "CONNECTION_STRING=$CONNECTION_STRING"
 
-    - name: Install Bicep CLI
-      run: az bicep install
-
-    - name: Deploy Azure Data Factory using Bicep
-      run: |
+        #Deploy using Bicep
         az deployment group create \
           --resource-group "komatsu" \
           --template-file ./bicep/modules/linkedservice.bicep \

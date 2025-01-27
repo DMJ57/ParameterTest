@@ -5,8 +5,8 @@
         "annotations": [],
         "type": "AzureBlobStorage",
         "typeProperties": {
-            "connectionString": "DefaultEndpointsProtocol=https;AccountName=demokomatsu;EndpointSuffix=core.windows.net;",
-            "encryptedCredential": "${{ secrets.AZURE_ENCRYPTED_CREDENTIAL }}"
+            "connectionString": "[parameters('connectionString')];",
+            "encryptedCredential": "[parameters('encryptedCredential')]"
 
         }
     }

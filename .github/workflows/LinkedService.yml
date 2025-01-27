@@ -63,4 +63,6 @@ jobs:
           --resource-group "komatsu" \
           --template-file ./bicep/modules/linkedservice.bicep \
           --parameters dataFactoryName=DMJTest \
-          --parameters linkedServices="$linkedServices"
+          --parameters linkedServices="$linkedServices" \
+          --parameters connectionString="${{ secrets.AZURE_CONNECTION_STRING }}" \
+          --parameters encryptedCredential=${{ secrets.AZURE_ENCRYPTED_CREDENTIAL }}

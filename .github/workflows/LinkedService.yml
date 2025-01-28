@@ -65,8 +65,7 @@ jobs:
     - name: Read linkedService JSON files and deploy
       run: |
         linkedService1=$(cat ./linkedService/AzureBlobStorage1.json)
-        linkedService1=$(echo "linkedService1" | jq '.properties.typeProperties.connectionString |= $CONNECTION_STRING')
-        linkedServices=$(jq -n \
+        linkedService1=$(echo "$linkedService1" | jq --arg CONNECTION_STRING "$CONNECTION_STRING" '.properties.typeProperties.connectionString |= $CONNECTION_STRING')        linkedServices=$(jq -n \
           --arg linkedService1 "$linkedService1" \
           '[ 
             {

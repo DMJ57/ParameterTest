@@ -2,7 +2,7 @@ targetScope = 'resourceGroup'  // Set targetScope to resourceGroup
 
 param dataFactoryName string
 param linkedServices array
-param connectionString string
+// param connectionString string
 param encryptedCredential string
 
 resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
@@ -16,7 +16,7 @@ resource linkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-0
   properties: {
     type: linkedService.definition.properties.type
     typeProperties: {
-      connectionString: connectionString
+      connectionString: linkedService.definition.properties.typeProperties.connectionString
       encryptedCredential: encryptedCredential}
   }
 }]

@@ -2,6 +2,8 @@ targetScope = 'resourceGroup'  // Set targetScope to resourceGroup
 
 param dataFactoryName string
 param linkedServices array
+param AzureBlobStorageConnectionString string
+param AzureBlobStorageEncryptedCredential string 
 // param connectionString string
 param encryptedCredential string
 
@@ -16,8 +18,8 @@ resource linkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-0
   properties: {
   template: json('linkedService/AzureBlobStorage1.json')
     parameters: {
-      exampleParam: exampleParam
-      anotherParam: anotherParam
+      exampleParam: AzureBlobStorageConnectionString
+      anotherParam: AzureBlobStorageEncryptedCredential
     }
 }
 }]

@@ -17,6 +17,7 @@ resource linkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-0
     type: linkedService.definition.properties.type
     typeProperties: {
       connectionString: linkedService.definition.properties.typeProperties.connectionString
-      encryptedCredential: encryptedCredential}
+      encryptedCredential: linkedService.definition.properties.typeProperties.encryptedCredential
+    }
   }
 }]

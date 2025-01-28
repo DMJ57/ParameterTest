@@ -95,7 +95,7 @@ jobs:
         az deployment group create \
           --resource-group "komatsu" \
           --template-file ./bicep/modules/linkedservice.bicep \
-          --parameters dataFactoryName=DMJTest \
+          --parameters dataFactoryName=ssdsss \
           --parameters linkedServices="$linkedServices" \
           --parameters encryptedCredential=${{ vars.TEST }}
           

@@ -16,10 +16,10 @@ resource linkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-0
   parent: dataFactory
   name: linkedService.name  // Removed the ${dataFactory.name}/ part
   properties: {
-  template: json('linkedService/AzureBlobStorage1.json')
-    parameters: {
-      exampleParam: AzureBlobStorageConnectionString
-      anotherParam: AzureBlobStorageEncryptedCredential
+    type: linkedService.definition.properties.type
+    typeProperties: {
+      connectionString: linkedService.definition.properties.typeProperties.connectionString
+      encryptedCredential: linkedService.definition.properties.typeProperties.encryptedCredential
     }
-}
+  }
 }]

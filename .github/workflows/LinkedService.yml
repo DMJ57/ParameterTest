@@ -82,7 +82,6 @@ jobs:
     - name: Read linkedService JSON files and deploy
       run: |
         keyVaultLinkedService = $(cat ./linkedService/AzureKeyVault1.json)
-        url= 
         keyVaultLinkedService = $(echo "$keyVaultLinkedService" | jq --arg keyVaultUrl "https://{{$env.keyVaultName}}.azure.net/" '.properties.typeProperties.baseUrl = $keyVaultUrl')
         linkedService1=$(cat ./linkedService/AzureBlobStorage1.json)
         linkedService1=$(echo "$linkedService1" | jq --arg connectionSecretName "$env.connectionSecretName" '.properties.typeProperties.connectionString.secretName = $connectionSecretName')  

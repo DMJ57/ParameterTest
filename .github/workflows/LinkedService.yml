@@ -52,7 +52,7 @@ jobs:
 
     - name: Get Key Vault Secrets
       id: kv-secrets
-      uses: azure/azure-keyvault-secrets-action@v3  # Use latest stable version
+      uses: Azure/get-keyvault-secrets@v1  
       with:
         vault-name: "kx1-demo-dev"
         secrets: |

@@ -28,6 +28,8 @@ jobs:
     - name: Set environment variables
       env:
           CONNECTION_STRING: '' 
+      run: |
+          echo "Name: $CONNECTION_STRING"
 
     - name: Install jq
       run: sudo apt-get install jq

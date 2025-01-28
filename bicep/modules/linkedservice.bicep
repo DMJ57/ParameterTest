@@ -2,8 +2,8 @@ targetScope = 'resourceGroup'  // Set targetScope to resourceGroup
 
 param dataFactoryName string
 param linkedServices array
-param Secret1 string
-param Secret2 string 
+param Secret1 string = "kx-demo-constring-dev"
+param Secret2 string = "kx-demo-creds-dev"
 // param connectionString string
 param encryptedCredential string
 

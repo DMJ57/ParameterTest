@@ -1,0 +1,26 @@
+{
+  "name": "AzureBlobStorage333",
+  "type": "Microsoft.DataFactory/factories/linkedservices",
+  "properties": {
+    "annotations": [],
+    "type": "AzureBlobStorage",
+    "typeProperties": {
+      "connectionString": {
+        "type": "AzureKeyVaultSecret",
+        "secretName": "AzureBlobStorageConnectionString",
+        "vault": {
+          "referenceName": "MyKeyVault",
+          "type": "LinkedServiceReference"
+        }
+      },
+      "encryptedCredential": {
+        "type": "AzureKeyVaultSecret",
+        "secretName": "AzureBlobStorageEncryptedCredential",
+        "vault": {
+          "referenceName": "MyKeyVault",
+          "type": "LinkedServiceReference"
+        }
+      }
+    }
+  }
+}

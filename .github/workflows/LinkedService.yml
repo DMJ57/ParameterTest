@@ -88,6 +88,7 @@ jobs:
         linkedService1=$(echo "$linkedService1" | jq --arg credentialSecretName "$env.credentialSecretName" '.properties.typeProperties.encryptedCredential.secretName = $credentialSecretName')  
        
         linkedServices=$(jq -n \
+          --arg keyVaultLinkedService "$keyVaultLinkedService" \
           --arg linkedService1 "$linkedService1" \
           '[
             {

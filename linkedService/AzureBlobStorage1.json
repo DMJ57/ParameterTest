@@ -7,12 +7,20 @@
 			"connectionString": {
 				"type": "AzureKeyVaultSecret",
 				"store": {
-					"referenceName": "",
+					"referenceName": "AzureKeyVault1",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": ""
-			}
-		}
+				"secretName": "kx-demo-constring-dev"
+			},
+			"encryptedCredential": {
+       				 "type": "AzureKeyVaultSecret",
+       				 "secretName": "AzureBlobStorageEncryptedCredential",
+        			 "store": {
+         					"referenceName": "MyKeyVault",
+         					"type": "LinkedServiceReference"
+       				 	  }
+     			       }
+		   }
 	},
 	"type": "Microsoft.DataFactory/factories/linkedservices"
 }

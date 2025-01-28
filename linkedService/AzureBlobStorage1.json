@@ -10,11 +10,11 @@
 					"referenceName": "AzureKeyVault1",
 					"type": "LinkedServiceReference"
 				},
-				"secretName": "kx-demo-constring-dev"
+				"secretName": "@parameters('Secret1')"
 			},
 			"encryptedCredential": {
        				 "type": "AzureKeyVaultSecret",
-       				 "secretName": "kx-demo-creds-dev",
+       				 "secretName": "@parameters('Secret2')",
         			 "store": {
          					"referenceName": "MyKeyVault",
          					"type": "LinkedServiceReference"

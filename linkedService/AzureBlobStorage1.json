@@ -14,7 +14,7 @@
 			},
 			"encryptedCredential": {
        				 "type": "AzureKeyVaultSecret",
-       				 "secretName": "AzureBlobStorageEncryptedCredential",
+       				 "secretName": "kx-demo-creds-dev",
         			 "store": {
          					"referenceName": "MyKeyVault",
          					"type": "LinkedServiceReference"

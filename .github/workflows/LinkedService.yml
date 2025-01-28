@@ -52,11 +52,15 @@ jobs:
 
     - name: Get Key Vault Secrets
       id: kv-secrets
-      uses: Azure/get-keyvault-secrets@v1  
+      uses: Azure/get-keyvault-secrets@v1 
       with:
-        vault-name: "kx1-demo-dev"
-        secrets: |
-          "kx-demo-constring-dev"          
+        keyvault: "kx1-demo-dev"
+        secrets: "kx-demo-constring-dev"
+
+      # with:
+      #   vault-name: "kx1-demo-dev"
+      #   secrets: |
+      #     "kx-demo-constring-dev"          
           
     # - name: Fetch secrets from Azure Key Vault
     #   id: fetch-secrets

@@ -80,7 +80,7 @@ jobs:
         secret1Value=$(echo "${{ steps.kv-secrets.outputs.secrets.kx-demo-constring-dev }}" | jq -r '.value')
         echo "secret1Value=$secret1Value" 
         linkedService1=$(cat ./linkedService/AzureBlobStorage1.json)
-        linkedService1=$(echo "$linkedService1" | jq '.properties.typeProperties.connectionString |= $secret1Value')        
+        linkedService1=$(echo "$linkedService1" | jq --arg CONNECTION_STRING11 "$secret1Value"'.properties.typeProperties.connectionString |= $CONNECTION_STRING11')        
         linkedServices=$(jq -n \
           --arg linkedService1 "$linkedService1" \
           '[ 

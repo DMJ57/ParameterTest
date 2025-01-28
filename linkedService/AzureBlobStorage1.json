@@ -1,26 +1,26 @@
 {
-	"name": "AzureBlobStorage1",
-	"properties": {
-		"annotations": [],
-		"type": "AzureBlobStorage",
-		"typeProperties": {
-			"connectionString": {
-				"type": "AzureKeyVaultSecret",
-				"store": {
-					"referenceName": "AzureKeyVault1",
-					"type": "LinkedServiceReference"
-				},
-				"secretName": "@parameters('Secret1')"
-			},
-			"encryptedCredential": {
-       				 "type": "AzureKeyVaultSecret",
-       				 "secretName": "@parameters('Secret2')",
-        			 "store": {
-         					"referenceName": "MyKeyVault",
-         					"type": "LinkedServiceReference"
-       				 	  }
-     			       }
-		   }
-	},
-	"type": "Microsoft.DataFactory/factories/linkedservices"
+  "name": "AzureBlobStorage1",
+  "properties": {
+    "annotations": [],
+    "type": "AzureBlobStorage",
+    "typeProperties": {
+      "connectionString": {
+        "type": "AzureKeyVaultSecret",
+        "store": {
+          "referenceName": "AzureKeyVault1",
+          "type": "LinkedServiceReference"
+        },
+        "secretName": ""
+      },
+      "encryptedCredential": {
+        "type": "AzureKeyVaultSecret",
+        "store": {
+          "referenceName": "AzureKeyVault1",
+          "type": "LinkedServiceReference"
+        },
+        "secretName": ""
+      }
+    }
+  },
+  "type": "Microsoft.DataFactory/factories/linkedservices"
 }

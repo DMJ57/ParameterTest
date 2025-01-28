@@ -59,7 +59,7 @@ jobs:
     - name: Read linkedService JSON files and deploy
       run: |
         linkedService1=$(cat ./linkedService/AzureBlobStorage1.json)
-
+        linkedService1=$(echo "linkedService1" | jq '.properties.typeProperties.connectionString |= CONNECTION_STRING')
         linkedServices=$(jq -n \
           --arg linkedService1 "$linkedService1" \
           '[ 
@@ -74,6 +74,5 @@ jobs:
           --template-file ./bicep/modules/linkedservice.bicep \
           --parameters dataFactoryName=DMJTest \
           --parameters linkedServices="$linkedServices" \
-          --parameters connectionString="${{ secrets.AZURE_CONNECTION_STRING }}" \
           --parameters encryptedCredential=${{ vars.TEST }}
           

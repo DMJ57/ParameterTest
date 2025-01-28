@@ -45,27 +45,39 @@ jobs:
                 "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
               }
         enable-AzPSSession: true
+    
 
     - name: Repo Var Test 
       run: echo "DJ=${{ vars.TEST }}"
 
-    - name: Fetch secrets from Azure Key Vault
-      id: fetch-secrets
-      run: |
-        # Set the Key Vault and secret names
-        KEY_VAULT_NAME="kx1-demo-dev"
-        SECRET_NAME="kx-demo-constring-dev"
+    - name: Get Key Vault Secrets
+      id: kv-secrets
+      uses: azure/keyvault-secrets@v4
+      with:
+        vault-name: "kx1-demo-dev"
+        secrets: |
+          "kx-demo-constring-dev"          
+          
+    # - name: Fetch secrets from Azure Key Vault
+    #   id: fetch-secrets
+    #   run: |
+    #     # Set the Key Vault and secret names
+    #     KEY_VAULT_NAME="kx1-demo-dev"
+    #     SECRET_NAME="kx-demo-constring-dev"
 
-        # Fetch the secret using Azure CLI
-        CONNECTION_STRING=$(az keyvault secret show --name $SECRET_NAME --vault-name $KEY_VAULT_NAME --query value -o tsv)
+    #     # Fetch the secret using Azure CLI
+    #     CONNECTION_STRING=$(az keyvault secret show --name $SECRET_NAME --vault-name $KEY_VAULT_NAME --query value -o tsv)
 
-        # Set the secret as an environment variable for later use
-        echo "CONNECTION_STRING=$CONNECTION_STRING"
+    #     # Set the secret as an environment variable for later use
+    #     echo "CONNECTION_STRING=$CONNECTION_STRING"
 
     - name: Read linkedService JSON files and deploy
       run: |
+        secret1Value=$(echo "${{ steps.kv-secrets.outputs.secrets.kx-demo-constring-dev }}" | jq -r '.value')
+        echo "secret1Value=$secret1Value" 
         linkedService1=$(cat ./linkedService/AzureBlobStorage1.json)
-        linkedService1=$(echo "$linkedService1" | jq --arg CONNECTION_STRING "$CONNECTION_STRING" '.properties.typeProperties.connectionString |= $CONNECTION_STRING')        linkedServices=$(jq -n \
+        linkedService1=$(echo "$linkedService1" | jq '.properties.typeProperties.connectionString |= $secret1Value')        
+        linkedServices=$(jq -n \
           --arg linkedService1 "$linkedService1" \
           '[ 
             {

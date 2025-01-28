@@ -21,9 +21,13 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    steps:
+    steps: 
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Set environment variables
+      env:
+          CONNECTION_STRING: '' 
 
     - name: Install jq
       run: sudo apt-get install jq
@@ -59,7 +63,7 @@ jobs:
     - name: Read linkedService JSON files and deploy
       run: |
         linkedService1=$(cat ./linkedService/AzureBlobStorage1.json)
-        linkedService1=$(echo "linkedService1" | jq '.properties.typeProperties.connectionString |= CONNECTION_STRING')
+        linkedService1=$(echo "linkedService1" | jq '.properties.typeProperties.connectionString |= $CONNECTION_STRING')
         linkedServices=$(jq -n \
           --arg linkedService1 "$linkedService1" \
           '[ 

@@ -77,7 +77,7 @@ jobs:
 
     - name: Read linkedService JSON files and deploy
       run: |
-        secret1Value=$(echo "${{ steps.kv-secrets.outputs.kx-demo-constring-dev }}" | jq -r '.value')
+        secret1Value=$(echo "${{ steps.kv-secrets.outputs.kx-demo-constring-dev }}")
         echo "secret1Value=$secret1Value" 
         linkedService1=$(cat ./linkedService/AzureBlobStorage1.json)
         echo "linkedService1=$linkedService1" 

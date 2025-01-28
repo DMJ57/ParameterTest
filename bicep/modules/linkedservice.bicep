@@ -2,8 +2,8 @@ targetScope = 'resourceGroup'  // Set targetScope to resourceGroup
 
 param dataFactoryName string
 param linkedServices array
-param Secret1 string = "kx-demo-constring-dev"
-param Secret2 string = "kx-demo-creds-dev"
+param Secret1 string = 'kx-demo-constring-dev'
+param Secret2 string = 'kx-demo-creds-dev'
 // param connectionString string
 param encryptedCredential string
 
@@ -19,8 +19,8 @@ resource linkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-0
   properties: {
   template: json('linkedService/AzureBlobStorage1.json')
     parameters: {
-      "Secret1": Secret1
-      "Secret2": Secret2
+      Secret1: Secret1
+      Secret2: Secret2
     }
 }
 }]

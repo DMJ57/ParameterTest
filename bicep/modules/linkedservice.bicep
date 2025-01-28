@@ -22,5 +22,4 @@ resource linkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-0
     //   encryptedCredential: linkedService.definition.properties.typeProperties.encryptedCredential
     // }
   }
-  type: linkedService.definition.type
 }]

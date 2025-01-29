@@ -36,6 +36,8 @@ jobs:
     uses: ./.github/workflows/LinkedService.yml
     with: 
       branch: main
+      environment: ${{ github.event.inputs.environment }}  # Passing the selected environment
+
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}

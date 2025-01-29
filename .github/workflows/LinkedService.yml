@@ -59,7 +59,7 @@ jobs:
 
     - name: Repo Var Test 
       run: echo "DJ=${{ vars.TEST }}"
-          echo "${{ vars.RESOURCE_GROUP }}"
+          echo "${{ env.RESOURCE_GROUP }}"
 
     # - name: Get Key Vault Secrets
     #   id: kv-secrets

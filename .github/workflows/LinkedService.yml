@@ -6,6 +6,10 @@ on:
       branch:
         required: true
         type: string
+      environment:
+        description: 'Selected environment for deployment'
+        required: true
+        type: string
     secrets:
       AZURE_CLIENT_ID:
         required: true
@@ -16,6 +20,10 @@ on:
       AZURE_TENANT_ID:
         required: true
 env:
+  SELECTED_ENVIRONMENT: ${{ inputs.environment }}  # Passing the selected environment to the environment variable
+  run: |
+    echo "The selected environment is: $SELECTED_ENVIRONMENT"  # Printing the selected environment value
+
   keyVaultName: 'kx1-demo-dev'
   connectionSecretName: 'kx-demo-constring-dev'
   credentialSecretName: 'kx-demo-cred-dev'

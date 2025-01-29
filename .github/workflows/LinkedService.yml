@@ -1,4 +1,4 @@
-.name: Deploy ADF LinkedService
+name: Deploy ADF LinkedService
 
 on:
   workflow_call:

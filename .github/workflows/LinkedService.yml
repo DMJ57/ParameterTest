@@ -110,7 +110,7 @@ jobs:
           ]')
 
         az deployment group create \
-          --resource-group "${RESOURCE_GROUP}" \
+          --resource-group "${{RESOURCE_GROUP}}" \
           --template-file ./bicep/modules/linkedservice.bicep \
           --parameters dataFactoryName=ssdsss \
           --parameters linkedServices="$linkedServices" \

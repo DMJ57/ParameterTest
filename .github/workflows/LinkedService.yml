@@ -22,7 +22,7 @@ on:
 env:
   SELECTED_ENVIRONMENT: ${{ inputs.environment }}  # Passing the selected environment to the environment variable
   run: |
-    echo "The selected environment is: ${{ env.SELECTED_ENVIRONMENT }}"  # Printing the selected environment value
+  echo "The selected environment is: ${{ env.SELECTED_ENVIRONMENT }}"  # Printing the selected environment value
 
   keyVaultName: 'kx1-demo-dev'
   connectionSecretName: 'kx-demo-constring-dev'

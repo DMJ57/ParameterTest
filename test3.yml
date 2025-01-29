@@ -1,0 +1,45 @@
+name: Conditional Deployment
+
+on:
+  push:
+    branches:
+      - dev
+  workflow_dispatch:
+    inputs:
+      ENVIRONMENT:
+        description: 'Environment to deploy'
+        required: true
+        default: 'development'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set environment variable
+        if: github.ref == 'refs/heads/dev'
+        run: echo "ENVIRONMENT=development" >> $GITHUB_ENV
+
+      - name: Set environment variable from input
+        if: github.event_name == 'workflow_dispatch'
+        run: echo "ENVIRONMENT=${{ github.event.inputs.ENVIRONMENT }}" >> $GITHUB_ENV
+
+      - name: Use environment variable
+        run: echo "Deploying to environment: $ENVIRONMENT"
+
+      # Add your deployment steps here
+      - name: Deploy application
+        run: |
+          if [ "$ENVIRONMENT" == "development" ]; then
+            echo "Deploying to dev environment"
+            # Add dev deployment commands here
+          elif [ "$ENVIRONMENT" == "staging" ]; then
+            echo "Deploying to staging environment"
+            # Add staging deployment commands here
+          elif [ "$ENVIRONMENT" == "production" ]; then
+            echo "Deploying to production environment"
+            # Add production deployment commands here
+          fi

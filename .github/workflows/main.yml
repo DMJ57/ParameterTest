@@ -6,11 +6,11 @@ on:
       environment:
         description: 'Choose environment to deploy'
         required: true
-        default: 'dev'
+        default: 'Dev'
         type: choice
         options:
-          - dev
-          - test
+          - Dev
+          - Test
 
 jobs: 
   build:

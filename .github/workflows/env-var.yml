@@ -19,6 +19,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}  # Dynamically set the environment based on input
+    deployment_branch_policy:
+        enabled: true
+        required: true  # Require approval before deployment to the prod environment
 
     steps:
       - name: Checkout code
@@ -30,3 +33,15 @@ jobs:
           echo "The secret key for this environment is: ${{ secrets.MY_SECRET_KEY }}"
         env:
           MY_SECRET_KEY: ${{ secrets.MY_SECRET_KEY }}  # Reference the secret for the environment
+
+
+
+    
+
+      - name: Deploy based on environment
+        run: |
+          echo "Deploying to ${{ github.environment }} environment"
+          echo "The secret key for this environment is: ${{ secrets.MY_SECRET_KEY }}"
+        env:
+          MY_SECRET_KEY: ${{ secrets.MY_SECRET_KEY }}  # Reference environment-specific secret
+

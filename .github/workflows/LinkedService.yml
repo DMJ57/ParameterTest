@@ -20,7 +20,7 @@ on:
       AZURE_TENANT_ID:
         required: true
 env:
-  SELECTED_ENVIRONMENT: ${{ inputs.environment }}  # Passing the selected environment to the environment variable
+  # SELECTED_ENVIRONMENT: ${{ inputs.environment }}  # Passing the selected environment to the environment variable
 
   keyVaultName: 'kx1-demo-dev'
   connectionSecretName: 'kx-demo-constring-dev'
@@ -34,6 +34,10 @@ jobs:
     steps: 
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Print selected environment
+      run: |
+          echo "Selected environment: ${{ inputs.myEnvironment }}"
 
     - name: Set environment variables
       env:

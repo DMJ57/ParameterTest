@@ -11,18 +11,22 @@ on:
         options:
           - Dev
           - Test
-
+    
 jobs: 
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set environment variable
+        run: |
+          echo "ENVIRONMENT=${GITHUB_EVENT.inputs.environment}" >> $GITHUB_ENV
+
       - name: Print selected environment
         run: |
-          echo "Selected environment: ${{ github.event.inputs.environment }}"
+          echo "Selected environment: $ENVIRONMENT"
 
       - name: Log in to Azure
         uses: azure/login@v2

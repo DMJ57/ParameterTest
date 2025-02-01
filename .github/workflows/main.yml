@@ -15,6 +15,12 @@ on:
 jobs: 
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env:
+          - dev
+          - qa
+          - prod
 
     steps:
       - name: Checkout code

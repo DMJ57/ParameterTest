@@ -22,7 +22,7 @@ jobs:
 
       - name: Print selected environment
         run: |
-          echo "Selected environment: ${{ inputs.environment }}"
+          echo "Selected environment: ${{ github.event.inputs.environment }}"
 
       - name: Log in to Azure
         uses: azure/login@v2
@@ -40,7 +40,7 @@ jobs:
     uses: ./.github/workflows/LinkedService.yml
     with: 
       branch: main
-      environment: ${{ inputs.environment }}  # Passing the selected environment
+      environment: ${{ github.event.inputs.environment }}  # Passing the selected environment
 
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}

@@ -3,7 +3,7 @@ name: Deploy ADF Components
 on:
   workflow_dispatch:
     inputs:
-      environment:
+      myEnvironment:
         description: 'Choose environment to deploy'
         required: true
         default: 'Dev'

@@ -11,6 +11,8 @@ on:
         options:
           - Dev
           - Test
+env:
+  myEnvironment: '${{ github.event.inputs.environment }}'
     
 jobs: 
   build:
@@ -22,7 +24,7 @@ jobs:
 
       - name: Set environment variable
         run: |
-          echo "ENVIRONMENT=${GITHUB_EVENT.inputs.environment}" >> $GITHUB_ENV
+          echo "ENVIRONMENT=${{ env.myEnvironment }}"
 
       - name: Print selected environment
         run: |

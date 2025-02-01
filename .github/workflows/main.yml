@@ -3,7 +3,7 @@ name: Deploy ADF Components
 on:
   workflow_dispatch:
     inputs:
-      myEnvironment:
+      environment:
         description: 'Choose environment to deploy'
         required: true
         default: 'Dev'
@@ -15,16 +15,14 @@ on:
 jobs: 
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        env:
-          - dev
-          - qa
-          - prod
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
+      - name: Print selected environment
+        run: |
+          echo "Selected environment: ${{ inputs.environment }}"
 
       - name: Log in to Azure
         uses: azure/login@v2
@@ -42,7 +40,7 @@ jobs:
     uses: ./.github/workflows/LinkedService.yml
     with: 
       branch: main
-      environment: ${{ github.event.inputs.environment }}  # Passing the selected environment
+      environment: ${{ inputs.environment }}  # Passing the selected environment
 
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}

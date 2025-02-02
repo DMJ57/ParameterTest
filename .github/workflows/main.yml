@@ -11,8 +11,7 @@ on:
         options:
           - Dev
           - Test
-env:
-  myEnvironment: '${{ github.event.inputs.environment }}'
+          - Stage
     
 jobs: 
   build:
@@ -31,16 +30,6 @@ jobs:
         run: |
           echo "adfName: $adfName"
 
-      - name: Set environment variable
-        run: |
-          echo "ENVIRONMENT=${{ env.myEnvironment }}"
-          echo "Environment=${{ github.event.inputs.environment }}"
-
-      - name: Print selected environment
-        run: |
-          echo "Selected environment: $ENVIRONMENT"
-          echo "Hey world!"
-
       - name: Log in to Azure
         uses: azure/login@v2
         with:
@@ -57,7 +46,6 @@ jobs:
     uses: ./.github/workflows/LinkedService.yml
     with: 
       branch: main
-      environment: ${{ github.event.inputs.environment }}  # Passing the selected environment
 
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}

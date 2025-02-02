@@ -11,41 +11,27 @@ on:
         options:
           - Dev
           - Test
-env:
-  myEnvironment: '${{ github.event.inputs.environment }}'
+          - Prod
     
 jobs: 
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        env:
-          - dev
-          - qa
-          - prod
     
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Extract adfName
-        run: |
-          adfName=$(jq -r ".${{ github.event.inputs.environment }}.adfName" ./bicep/parameters.json)
-          echo "adfName=$adfName" >> $GITHUB_ENV
+      # - name: Extract paramter
+      #   run: |
+      #     adfName=$(jq -r ".${{ github.event.inputs.environment }}.adfName" ./bicep/parameters.json)
 
-      - name: Print adfName
-        run: |
-          echo "adfName: $adfName"
+      # - name: Print paramter
+      #   run: |
+      #     echo "adfName: $adfName"
 
       - name: Set environment variable
         run: |
-          echo "ENVIRONMENT=${{ env.myEnvironment }}"
           echo "Environment=${{ github.event.inputs.environment }}"
-
-      - name: Print selected environment
-        run: |
-          echo "Selected environment: $ENVIRONMENT"
-          echo "Hey world!"
 
       - name: Log in to Azure
         uses: azure/login@v2
@@ -57,46 +43,19 @@ jobs:
                 "subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}",
                 "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
               }
-      - name: Get environment parameters
-        run: |
-          echo "resourceGroupName=$(jq -r '.${{ matrix.env }}.resourceGroupName' ./bicep/parameters.json)"
-          echo "location=$(jq -r '.${{ matrix.env }}.location' ./bicep/parameters.json)"
-          echo "adfName=$(jq -r '.${{ matrix.env }}.adfName' ./bicep/parameters.json)"
+      
+  deploy-LinkedService:
+    needs: build
+    uses: ./.github/workflows/LinkedService.yml
+    with: 
+      branch: main
+      environment: ${{ github.event.inputs.environment }}  # Passing the selected environment
 
-      - name: Deploy ADF to ${{ matrix.env }}
-        uses: azure/arm-deploy@v1
-        with:
-          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          resourceGroupName: ${{ resourceGroupName }}
-          template: ./bicep/modules/linkedservice.bicep
-          parameters: |
-            {
-              "environment": {
-                "value": "${{ matrix.env }}"
-              },
-              "resourceGroupName": {
-                "value": "${{ resourceGroupName }}"
-              },
-              "location": {
-                "value": "${{ location }}"
-              },
-              "adfName": {
-                "value": "${{ adfName }}"
-              }
-            }
-
-  # deploy-LinkedService:
-  #   needs: build
-  #   uses: ./.github/workflows/LinkedService.yml
-  #   with: 
-  #     branch: main
-  #     environment: ${{ github.event.inputs.environment }}  # Passing the selected environment
-
-  #   secrets:
-  #     AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  #     AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  #     AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  #     AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+    secrets:
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
 
   # deploy-DataSets:
@@ -142,4 +101,4 @@ jobs:
   #     AZURE_CLIENT_SECRET_D_APIM: ${{ secrets.AZURE_CLIENT_SECRET_D_APIM }}
   #     AZURE_SUBSCRIPTION_ID_D_APIM: ${{ secrets.AZURE_SUBSCRIPTION_ID_D_APIM }}
   #     AZURE_TENANT_ID_D_APIM: ${{ secrets.AZURE_TENANT_ID_D_APIM }}
-
+#

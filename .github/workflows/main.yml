@@ -43,18 +43,18 @@ jobs:
                 "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
               }
 
-  deploy-LinkedService:
-    needs: build
-    uses: ./.github/workflows/LinkedService.yml
-    with: 
-      branch: main
-      environment: ${{ github.event.inputs.environment }}  # Passing the selected environment
+  # deploy-LinkedService:
+  #   needs: build
+  #   uses: ./.github/workflows/LinkedService.yml
+  #   with: 
+  #     branch: main
+  #     environment: ${{ github.event.inputs.environment }}  # Passing the selected environment
 
-    secrets:
-      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-      AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+  #   secrets:
+  #     AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+  #     AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+  #     AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  #     AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
   # deploy-DataSets:
   #   needs: deploy-LinkedService

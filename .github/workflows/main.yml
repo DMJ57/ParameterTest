@@ -47,7 +47,7 @@ jobs:
     needs: build
     uses: ./.github/workflows/LinkedService.yml
     with: 
-      branch: 'feature-*'
+      branch: main
     secrets:
       AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}

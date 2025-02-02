@@ -6,10 +6,6 @@ on:
       branch:
         required: true
         type: string
-      environment:
-        description: 'Selected environment for deployment'
-        required: true
-        type: string
     secrets:
       AZURE_CLIENT_ID:
         required: true
@@ -20,8 +16,7 @@ on:
       AZURE_TENANT_ID:
         required: true
 env:
-  SELECTED_ENVIRONMENT: ${{ inputs.environment }}  # Passing the selected environment to the environment variable
-
+  environment: "${{ github.event.inputs.environment }}"
   keyVaultName: 'kx1-demo-dev'
   connectionSecretName: 'kx-demo-constring-dev'
   credentialSecretName: 'kx-demo-cred-dev'
@@ -37,15 +32,7 @@ jobs:
 
     - name: Print selected environment
       run: |
-          echo "Selected environment: ${{ inputs.myEnvironment }}"
           echo "Environment=${{ github.event.inputs.environment }}"
-          echo "${{ env.SELECTED_ENVIRONMENT }}"
-
-    - name: Set environment variables
-      env:
-          CONNECTION_STRING: '' 
-      run: |
-          echo "Name: $CONNECTION_STRING"
 
     - name: Install jq
       run: sudo apt-get install jq
@@ -67,30 +54,30 @@ jobs:
       run: echo "DJ=${{ vars.TEST }}"
           echo "${{ env.RESOURCE_GROUP }}"
 
-    # - name: Get Key Vault Secrets
-    #   id: kv-secrets
-    #   uses: Azure/get-keyvault-secrets@v1 
-    #   with:
-    #     keyvault: "kx1-demo-dev"
-    #     secrets: "kx-demo-constring-dev"
+    - name: Get Key Vault Secrets
+      id: kv-secrets
+      uses: Azure/get-keyvault-secrets@v1 
+      with:
+        keyvault: "kx1-demo-dev"
+        secrets: "kx-demo-constring-dev"
 
       # with:
       #   vault-name: "kx1-demo-dev"
       #   secrets: |
       #     "kx-demo-constring-dev"          
           
-    # - name: Fetch secrets from Azure Key Vault
-    #   id: fetch-secrets
-    #   run: |
-    #     # Set the Key Vault and secret names
-    #     KEY_VAULT_NAME="kx1-demo-dev"
-    #     SECRET_NAME="kx-demo-constring-dev"
+    - name: Fetch secrets from Azure Key Vault
+      id: fetch-secrets
+      run: |
+        # Set the Key Vault and secret names
+        KEY_VAULT_NAME="kx1-demo-dev"
+        SECRET_NAME="kx-demo-constring-dev"
 
-    #     # Fetch the secret using Azure CLI
-    #     CONNECTION_STRING=$(az keyvault secret show --name $SECRET_NAME --vault-name $KEY_VAULT_NAME --query value -o tsv)
+        # Fetch the secret using Azure CLI
+        CONNECTION_STRING=$(az keyvault secret show --name $SECRET_NAME --vault-name $KEY_VAULT_NAME --query value -o tsv)
 
-    #     # Set the secret as an environment variable for later use
-    #     echo "CONNECTION_STRING=$CONNECTION_STRING"
+        # Set the secret as an environment variable for later use
+        echo "CONNECTION_STRING=$CONNECTION_STRING"
 
     - name: Read linkedService JSON files and deploy
       run: |

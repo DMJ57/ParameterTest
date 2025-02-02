@@ -20,7 +20,7 @@ on:
       AZURE_TENANT_ID:
         required: true
 env:
-  # SELECTED_ENVIRONMENT: ${{ inputs.environment }}  # Passing the selected environment to the environment variable
+  SELECTED_ENVIRONMENT: ${{ inputs.environment }}  # Passing the selected environment to the environment variable
 
   keyVaultName: 'kx1-demo-dev'
   connectionSecretName: 'kx-demo-constring-dev'
@@ -39,6 +39,7 @@ jobs:
       run: |
           echo "Selected environment: ${{ inputs.myEnvironment }}"
           echo "Environment=${{ github.event.inputs.environment }}"
+          echo "${{ env.SELECTED_ENVIRONMENT }}"
 
     - name: Set environment variables
       env:

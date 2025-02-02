@@ -25,6 +25,8 @@ env:
   keyVaultName: 'kx1-demo-dev'
   connectionSecretName: 'kx-demo-constring-dev'
   credentialSecretName: 'kx-demo-cred-dev'
+
+  adfName: ""
   
 jobs:
   
@@ -55,11 +57,11 @@ jobs:
               }
         enable-AzPSSession: true
     
-    - name: Extract paramter
+    - name: Extract parameter
       run: |
           adfName=$(jq -r ".${{ github.event.inputs.environment }}.adfName" ./bicep/parameters.json)
 
-    - name: Print paramter
+    - name: Print parameter
       run: |
           echo "adfName: $adfName"
           

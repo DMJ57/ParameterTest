@@ -17,6 +17,12 @@ env:
 jobs: 
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env:
+          - dev
+          - qa
+          - prod
     
     steps:
       - name: Checkout code
@@ -51,6 +57,33 @@ jobs:
                 "subscriptionId":"${{ secrets.AZURE_SUBSCRIPTION_ID }}",
                 "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
               }
+      - name: Get environment parameters
+        run: |
+          echo "resourceGroupName=$(jq -r '.${{ matrix.env }}.resourceGroupName' ./bicep/parameters.json)"
+          echo "location=$(jq -r '.${{ matrix.env }}.location' ./bicep/parameters.json)"
+          echo "adfName=$(jq -r '.${{ matrix.env }}.adfName' ./bicep/parameters.json)"
+
+      - name: Deploy ADF to ${{ matrix.env }}
+        uses: azure/arm-deploy@v1
+        with:
+          subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          resourceGroupName: ${{ resourceGroupName }}
+          template: ./bicep/modules/linkedservice.bicep
+          parameters: |
+            {
+              "environment": {
+                "value": "${{ matrix.env }}"
+              },
+              "resourceGroupName": {
+                "value": "${{ resourceGroupName }}"
+              },
+              "location": {
+                "value": "${{ location }}"
+              },
+              "adfName": {
+                "value": "${{ adfName }}"
+              }
+            }
 
   # deploy-LinkedService:
   #   needs: build

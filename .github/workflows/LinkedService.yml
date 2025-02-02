@@ -16,10 +16,11 @@ on:
       AZURE_TENANT_ID:
         required: true
 env:
-  environment: "${{ github.event.inputs.environment }}"
-  keyVaultName: 'kx1-demo-dev'
-  connectionSecretName: 'kx-demo-constring-dev'
-  credentialSecretName: 'kx-demo-cred-dev'
+  # environment: "${{ github.event.inputs.environment }}"
+  resourceGroupName: $(jq -r ".${{ github.event.inputs.environment }}.resourceGroupName" ./bicep/parameters.json)
+  keyVaultName: $(jq -r ".${{ github.event.inputs.environment }}.keyVaultName" ./bicep/parameters.json)
+  connectionSecretName: $(jq -r ".${{ github.event.inputs.environment }}.connectionSecretName" ./bicep/parameters.json)
+  credentialSecretName: $(jq -r ".${{ github.event.inputs.environment }}.credentialSecretName" ./bicep/parameters.json)
   adfName: $(jq -r ".${{ github.event.inputs.environment }}.adfName" ./bicep/parameters.json)
   
 jobs:
@@ -74,9 +75,9 @@ jobs:
           ]')
 
         az deployment group create \
-          --resource-group "${{env.RESOURCE_GROUP}}" \
+          --resource-group "${{ env.resourceGroupName }}" \
           --template-file ./bicep/modules/linkedservice.bicep \
           --parameters dataFactoryName=${{ env.adfName }} \
           --parameters linkedServices="$linkedServices" \
-          --parameters encryptedCredential=${{ vars.TEST }}
+          
           

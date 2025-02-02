@@ -20,7 +20,7 @@ env:
   keyVaultName: 'kx1-demo-dev'
   connectionSecretName: 'kx-demo-constring-dev'
   credentialSecretName: 'kx-demo-cred-dev'
-  adfName: $(jq -r ".${{ env.environment }}.adfName" ./bicep/parameters.json)
+  adfName: $(jq -r ".${{ github.event.inputs.environment }}.adfName" ./bicep/parameters.json)
   
 jobs:
   
@@ -31,10 +31,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Print selected environment
+    - name: Print selected environment and adfname
       run: |
-          echo "Selected environment: ${{ inputs.myEnvironment }}"
-          echo "Environment=${{ github.event.inputs.environment }}"
+          echo "Selected environment: ${{ env.environment }}"
+          echo "Selected adf: ${{ env.adfName }}"
 
     - name: Install jq
       run: sudo apt-get install jq

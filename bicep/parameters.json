@@ -2,21 +2,33 @@
   "Dev": {
     "resourceGroupName": "komatsu-dev",
     "location": "eastus",
-    "adfName": "dev-adf"
+    "adfName": "dev-adf",
+    "keyVaultName": "kx1-demo-dev",
+    "connectionSecretName": "kx-demo-constring-dev",
+    "credentialSecretName": "kx-demo-cred-dev"
   },
   "Test": {
     "resourceGroupName": "komatsu-test",
     "location": "eastus",
-    "adfName": "test-adf"
+    "adfName": "test-adf",
+    "keyVaultName": "kx1-demo-test",
+    "connectionSecretName": "kx-demo-constring-test",
+    "credentialSecretName": "kx-demo-cred-test"
   },
   "Stage": {
     "resourceGroupName": "komatsu-stage",
     "location": "eastus",
-    "adfName": "stage-adf"
+    "adfName": "stage-adf",
+    "keyVaultName": "kx1-demo-stage",
+    "connectionSecretName": "kx-demo-constring-stage",
+    "credentialSecretName": "kx-demo-cred-stage"
   },
   "Prod": {
     "resourceGroupName": "komatsu-prod",
     "location": "eastus",
-    "adfName": "prod-adf"
+    "adfName": "prod-adf",
+    "keyVaultName": "kx1-demo-prod",
+    "connectionSecretName": "kx-demo-constring-prod",
+    "credentialSecretName": "kx-demo-cred-prod"
   }
 }

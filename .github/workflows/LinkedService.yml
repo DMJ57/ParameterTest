@@ -6,6 +6,10 @@ on:
       branch:
         required: true
         type: string
+      environment:
+        description: 'Selected environment for deployment'
+        required: true
+        type: string
     secrets:
       AZURE_CLIENT_ID:
         required: true
@@ -16,10 +20,13 @@ on:
       AZURE_TENANT_ID:
         required: true
 env:
-  environment: "${{ github.event.inputs.environment }}"
+  # SELECTED_ENVIRONMENT: ${{ inputs.environment }}  # Passing the selected environment to the environment variable
+
   keyVaultName: 'kx1-demo-dev'
   connectionSecretName: 'kx-demo-constring-dev'
   credentialSecretName: 'kx-demo-cred-dev'
+
+  adfName: ""
   
 jobs:
   
@@ -32,6 +39,7 @@ jobs:
 
     - name: Print selected environment
       run: |
+          echo "Selected environment: ${{ inputs.myEnvironment }}"
           echo "Environment=${{ github.event.inputs.environment }}"
 
     - name: Install jq
@@ -48,41 +56,16 @@ jobs:
                 "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
               }
         enable-AzPSSession: true
-
+    
     - name: Extract parameter
       run: |
           adfName=$(jq -r ".${{ env.environment }}.adfName" ./bicep/parameters.json)
           echo "adfName: $adfName"
 
-    - name: Repo Var Test 
-      run: echo "DJ=${{ vars.TEST }}"
-          echo "${{ env.RESOURCE_GROUP }}"
-
-    - name: Get Key Vault Secrets
-      id: kv-secrets
-      uses: Azure/get-keyvault-secrets@v1 
-      with:
-        keyvault: "kx1-demo-dev"
-        secrets: "kx-demo-constring-dev"
-
-      # with:
-      #   vault-name: "kx1-demo-dev"
-      #   secrets: |
-      #     "kx-demo-constring-dev"          
-          
-    - name: Fetch secrets from Azure Key Vault
-      id: fetch-secrets
+    - name: Print parameter
       run: |
-        # Set the Key Vault and secret names
-        KEY_VAULT_NAME="kx1-demo-dev"
-        SECRET_NAME="kx-demo-constring-dev"
-
-        # Fetch the secret using Azure CLI
-        CONNECTION_STRING=$(az keyvault secret show --name $SECRET_NAME --vault-name $KEY_VAULT_NAME --query value -o tsv)
-
-        # Set the secret as an environment variable for later use
-        echo "CONNECTION_STRING=$CONNECTION_STRING"
-
+          echo "adfName: $adfName"
+          
     - name: Read linkedService JSON files and deploy
       run: |
         keyVaultLinkedService=$(cat ./linkedService/AzureKeyVault1.json)

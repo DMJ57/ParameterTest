@@ -11,6 +11,12 @@ param triggers array
 
 param location string = 'East US' // Default location
 
+param environment string
+
+param resourceGroupName string = parameters('${environment}').resourceGroupName
+param location string = parameters('${environment}').location
+param adfName string = parameters('${environment}').adfName
+
 module dataFactoryModule './modules/datafactory.bicep' = {
   name: 'ADFcomponents'
   params: {

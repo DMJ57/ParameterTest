@@ -24,7 +24,7 @@ jobs:
 
       - name: Extract adfName
         run: |
-          adfName=$(jq -r ".${{ github.event.inputs.environment }}.adfName" parameters.json)
+          adfName=$(jq -r ".${{ github.event.inputs.environment }}.adfName" ./bicep/modules/parameters.json)
           echo "adfName=$adfName" >> $GITHUB_ENV
 
       - name: Print adfName

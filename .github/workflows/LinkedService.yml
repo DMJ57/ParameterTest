@@ -6,10 +6,6 @@ on:
       branch:
         required: true
         type: string
-      environment:
-        description: 'Selected environment for deployment'
-        required: true
-        type: string
     secrets:
       AZURE_CLIENT_ID:
         required: true
@@ -20,12 +16,10 @@ on:
       AZURE_TENANT_ID:
         required: true
 env:
-  # SELECTED_ENVIRONMENT: ${{ inputs.environment }}  # Passing the selected environment to the environment variable
-
+  environment: "${{ github.event.inputs.environment }}"
   keyVaultName: 'kx1-demo-dev'
   connectionSecretName: 'kx-demo-constring-dev'
   credentialSecretName: 'kx-demo-cred-dev'
-
   adfName: ""
   
 jobs:
@@ -39,8 +33,7 @@ jobs:
 
     - name: Print selected environment
       run: |
-          echo "Selected environment: ${{ inputs.myEnvironment }}"
-          echo "Environment=${{ github.event.inputs.environment }}"
+          echo "Environment=${{ env.environment }}"
 
     - name: Install jq
       run: sudo apt-get install jq

@@ -9,6 +9,11 @@
     "location": "eastus",
     "adfName": "test-adf"
   },
+  "Stage": {
+    "resourceGroupName": "komatsu-stage",
+    "location": "eastus",
+    "adfName": "stage-adf"
+  },
   "Prod": {
     "resourceGroupName": "komatsu-prod",
     "location": "eastus",

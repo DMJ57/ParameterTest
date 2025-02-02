@@ -20,13 +20,11 @@ on:
       AZURE_TENANT_ID:
         required: true
 env:
-  # SELECTED_ENVIRONMENT: ${{ inputs.environment }}  # Passing the selected environment to the environment variable
-
+  environment: "${{ github.event.inputs.environment }}"
   keyVaultName: 'kx1-demo-dev'
   connectionSecretName: 'kx-demo-constring-dev'
   credentialSecretName: 'kx-demo-cred-dev'
-
-  adfName: ""
+  adfName: $(jq -r ".${{ env.environment }}.adfName" ./bicep/parameters.json)
   
 jobs:
   
@@ -56,15 +54,6 @@ jobs:
                 "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
               }
         enable-AzPSSession: true
-    
-    - name: Extract parameter
-      run: |
-          adfName=$(jq -r ".${{ env.environment }}.adfName" ./bicep/parameters.json)
-          echo "adfName: $adfName"
-
-    - name: Print parameter
-      run: |
-          echo "adfName: $adfName"
           
     - name: Read linkedService JSON files and deploy
       run: |
@@ -91,7 +80,7 @@ jobs:
         az deployment group create \
           --resource-group "${{env.RESOURCE_GROUP}}" \
           --template-file ./bicep/modules/linkedservice.bicep \
-          --parameters dataFactoryName=ssdsss \
+          --parameters dataFactoryName=${{ env.adfName }} \
           --parameters linkedServices="$linkedServices" \
           --parameters encryptedCredential=${{ vars.TEST }}
           

@@ -48,7 +48,11 @@ jobs:
                 "tenantId":"${{ secrets.AZURE_TENANT_ID }}"
               }
         enable-AzPSSession: true
-    
+
+    - name: Extract parameter
+      run: |
+          adfName=$(jq -r ".${{ env.environment }}.adfName" ./bicep/parameters.json)
+          echo "adfName: $adfName"
 
     - name: Repo Var Test 
       run: echo "DJ=${{ vars.TEST }}"

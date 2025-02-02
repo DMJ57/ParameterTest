@@ -60,6 +60,7 @@ jobs:
     - name: Extract parameter
       run: |
           adfName=$(jq -r ".${{ github.event.inputs.environment }}.adfName" ./bicep/parameters.json)
+          echo "adfName: $adfName"
 
     - name: Print parameter
       run: |

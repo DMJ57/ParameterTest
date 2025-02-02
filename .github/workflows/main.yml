@@ -22,6 +22,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Extract adfName
+        run: |
+          adfName=$(jq -r ".${{ github.event.inputs.environment }}.adfName" parameters.json)
+          echo "adfName=$adfName" >> $GITHUB_ENV
+
+      - name: Print adfName
+        run: |
+          echo "adfName: $adfName"
+
       - name: Set environment variable
         run: |
           echo "ENVIRONMENT=${{ env.myEnvironment }}"

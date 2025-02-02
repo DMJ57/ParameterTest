@@ -6,6 +6,10 @@ on:
       branch:
         required: true
         type: string
+      environment:
+        description: 'Selected environment for deployment'
+        required: true
+        type: string
     secrets:
       AZURE_CLIENT_ID:
         required: true
@@ -16,11 +20,14 @@ on:
       AZURE_TENANT_ID:
         required: true
 env:
-  environment: "${{ github.event.inputs.environment }}"
+  # SELECTED_ENVIRONMENT: ${{ inputs.environment }}  # Passing the selected environment to the environment variable
+
   keyVaultName: 'kx1-demo-dev'
   connectionSecretName: 'kx-demo-constring-dev'
   credentialSecretName: 'kx-demo-cred-dev'
-  adfName: ""
+
+  adfName: $(jq -r ".${{ github.event.inputs.environment }}.adfName" ./bicep/parameters.json)
+
   
 jobs:
   
@@ -33,7 +40,8 @@ jobs:
 
     - name: Print selected environment
       run: |
-          echo "Environment=${{ env.environment }}"
+          echo "Selected environment: ${{ inputs.myEnvironment }}"
+          echo "Environment=${{ github.event.inputs.environment }}"
 
     - name: Install jq
       run: sudo apt-get install jq
@@ -50,14 +58,15 @@ jobs:
               }
         enable-AzPSSession: true
     
-    - name: Extract parameter
-      run: |
-          adfName=$(jq -r ".${{ github.event.inputs.environment }}.adfName" ./bicep/parameters.json)
-          echo "adfName: $adfName"
+    # - name: Extract parameter
+    #   id: extractParameter
+    #   run: |
+    #       adfName=$(jq -r ".${{ github.event.inputs.environment }}.adfName" ./bicep/parameters.json)
+    #       echo "adfName: $adfName"
 
     - name: Print parameter
       run: |
-          echo "adfName: $adfName"
+          echo "adfName: ${{env.adfName}}"
           
     - name: Read linkedService JSON files and deploy
       run: |

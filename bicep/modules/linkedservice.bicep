@@ -5,9 +5,16 @@ param linkedServices array
 // param connectionString string
 param encryptedCredential string
 
+param environment string
+
+param resourceGroupName string = parameters('${environment}').resourceGroupName
+param location string = parameters('${environment}').location
+param adfName string = parameters('${environment}').adfName
+
 resource dataFactory 'Microsoft.DataFactory/factories@2018-06-01' = {
-  name: dataFactoryName
-  location: 'East US'
+  name: adfName
+  location: location
+  resourceGroupName: resourceGroupName
 }
 
 
@@ -17,9 +24,5 @@ resource linkedService 'Microsoft.DataFactory/factories/linkedservices@2018-06-0
   properties: {
     type: linkedService.definition.properties.type
     typeProperties: linkedService.definition.properties.typeProperties
-    // typeProperties: {
-    //   connectionString: linkedService.definition.properties.typeProperties.connectionString
-    //   encryptedCredential: linkedService.definition.properties.typeProperties.encryptedCredential
-    // }
   }
 }]

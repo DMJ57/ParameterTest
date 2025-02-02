@@ -1,16 +1,16 @@
 {
   "Dev": {
-    "resourceGroupName": "dev-rg",
+    "resourceGroupName": "komatsu-dev",
     "location": "eastus",
     "adfName": "dev-adf"
   },
   "Test": {
-    "resourceGroupName": "qa-rg",
+    "resourceGroupName": "komatsu-test",
     "location": "eastus",
-    "adfName": "qa-adf"
+    "adfName": "test-adf"
   },
   "Prod": {
-    "resourceGroupName": "prod-rg",
+    "resourceGroupName": "komatsu-prod",
     "location": "eastus",
     "adfName": "prod-adf"
   }

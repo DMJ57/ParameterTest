@@ -93,7 +93,7 @@ jobs:
         az deployment group create \
           --resource-group "${{env.RESOURCE_GROUP}}" \
           --template-file ./bicep/modules/linkedservice.bicep \
-          --parameters dataFactoryName=ssdsss \
+          --parameters dataFactoryName=${{ env.adfName }} \
           --parameters linkedServices="$linkedServices" \
           --parameters encryptedCredential=${{ vars.TEST }}
           

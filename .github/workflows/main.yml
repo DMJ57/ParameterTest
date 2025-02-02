@@ -30,6 +30,7 @@ jobs:
       - name: Print selected environment
         run: |
           echo "Selected environment: $ENVIRONMENT"
+          echo "Hey world!"
 
       - name: Log in to Azure
         uses: azure/login@v2

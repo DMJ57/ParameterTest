@@ -13,7 +13,7 @@
     "resourceGroupName": "komatsu-stage",
     "location": "eastus",
     "adfName": "stage-adf"
-  }
+  },
   "Prod": {
     "resourceGroupName": "komatsu-prod",
     "location": "eastus",
